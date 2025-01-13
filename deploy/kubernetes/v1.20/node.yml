@@ -87,7 +87,7 @@ spec:
           securityContext:
             privileged: true
           imagePullPolicy: IfNotPresent
-          image: ghcr.io/zebernst/synology-csi:v1.2.0
+          image: ghcr.io/blevinn/synology-csi:v1.2.0
           args:
             - --nodeid=$(KUBE_NODE_NAME)
             - --endpoint=$(CSI_ENDPOINT)

@@ -7,6 +7,7 @@ keywords:
   - CSI Driver
 kubeVersion: ">= 1.20.0"
 sources:
+  - https://github.com/blevinn/synology-csi-talos/tree/main
   - https://github.com/zebernst/synology-csi-talos/tree/main
   - https://github.com/SynologyOpenSource/synology-csi/tree/main
 version: 0.9.5-pre.1
