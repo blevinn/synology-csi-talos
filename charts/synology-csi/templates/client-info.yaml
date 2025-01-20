@@ -8,5 +8,6 @@ kind: Secret
 metadata:
   labels: {{- include "synology-csi.labels" $ | nindent 4 }}
   name: {{ .name | default (include "synology-csi.fullname" $ | printf "%s-client-info") }}
+  namespace: {{ $.Release.Namespace }}
 {{- end }}
 {{- end }}

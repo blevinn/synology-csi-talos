@@ -6,6 +6,7 @@ kind: ServiceAccount
 metadata:
   labels: {{- include "synology-csi.labels" $ | nindent 4 }}
   name: {{ include "synology-csi.fullname" $ }}-snapshotter
+  namespace: {{ $.Release.Namespace }}
 
 ---
 kind: ClusterRole
@@ -51,6 +52,7 @@ metadata:
     app: snapshotter
     {{- include "synology-csi.labels" $ | nindent 4 }}
   name: {{ include "synology-csi.fullname" $ }}-snapshotter
+  namespace: {{ $.Release.Namespace }}
 spec:
   selector:
     matchLabels:

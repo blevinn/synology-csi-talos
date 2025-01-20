@@ -5,6 +5,7 @@ kind: ServiceAccount
 metadata:
   labels: {{- include "synology-csi.labels" $ | nindent 4 }}
   name: {{ include "synology-csi.fullname" $ }}-node
+  namespace: {{ $.Release.Namespace }}
 
 ---
 kind: ClusterRole
@@ -53,6 +54,7 @@ metadata:
     app: node
     {{- include "synology-csi.labels" $ | nindent 4 }}
   name: {{ include "synology-csi.fullname" $ }}-node
+  namespace: {{ $.Release.Namespace }}
 spec:
   selector:
     matchLabels:
