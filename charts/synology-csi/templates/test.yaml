@@ -1,3 +1,4 @@
+{{- if .Values.test.enabled }}
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -11,11 +12,10 @@ metadata:
 spec:
   accessModes:
     - ReadWriteOnce
-  storageClassName: synology-iscsi-storage-delete
+  storageClassName: {{ .Values.test.storageClass }}
   resources:
     requests:
       storage: 1Gi
-
 ---
 apiVersion: batch/v1
 kind: Job
@@ -48,3 +48,4 @@ spec:
         - name: data
           persistentVolumeClaim:
             claimName: {{ include "synology-csi.fullname" $ }}-test
+{{- end }}
