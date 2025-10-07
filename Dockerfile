@@ -16,7 +16,7 @@ ARG TARGETPLATFORM
 ENV CGO_ENABLED=0 GOOS=linux
 RUN GOARCH=$(echo "$TARGETPLATFORM" | cut -f2 -d/) \
     GOARM=$(echo "$TARGETPLATFORM" | cut -f3 -d/ | cut -c2-) \
-    go build -v -ldflags '-extldflags "-static"' -o ./synology-csi-driver .
+    go build -v -ldflags '-extldflags "-static"' -o ./bin/synology-csi-driver .
 
 ############## Final stage ##############
 FROM alpine:latest as driver
