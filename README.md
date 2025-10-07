@@ -9,7 +9,7 @@ This repository also includes a [Helm chart](./charts/synology-csi) for convenie
 Driver Name: csi.san.synology.com
 | Driver Version                                                                   | Image                                                                 | Supported K8s Version |
 | -------------------------------------------------------------------------------- | --------------------------------------------------------------------- | --------------------- |
-| [v1.2.0](https://github.com/SynologyOpenSource/synology-csi/tree/release-v1.2.0) | [synology-csi:v1.2.0](https://hub.docker.com/r/synology/synology-csi) | 1.20+                 |
+| [v1.2.1](https://github.com/SynologyOpenSource/synology-csi/tree/release-v1.2.1) | [synology-csi:v1.2.1](https://hub.docker.com/r/synology/synology-csi) | 1.20+                 |
 
 
 
@@ -66,7 +66,7 @@ The Synology CSI driver supports:
         - Create a **default** storage class named "`synology-iscsi-storage`" that uses the "`Retain`" policy.
         - Create a volume snapshot class named "`synology-snapshotclass`" that uses the "`Delete`" policy. (*Full* deployment only)
     * **HELM** (Local Development)
-        1. `kubectl create ns synology-csi`
+        1. `kubectl create ns synology-csi; kubectl label ns synology-csi pod-security.kubernetes.io/enforce=privileged --overwrite`
         2. `kubectl create secret -n synology-csi generic client-info-secret --from-file=./config/client-info.yml`
         3. `cd deploy/helm; make up`
 
@@ -189,6 +189,8 @@ Create and apply StorageClasses with the properties you want.
     | *fsType*                                         | string | The formatting file system of the *PersistentVolumes* when you mount them on the pods. This parameter only works with iSCSI. For SMB, the fsType is always ‘cifs‘. | 'ext4'  | iSCSI               |
     | *protocol*                                       | string | The storage backend protocol. Enter ‘iscsi’ to create LUNs, or ‘smb‘ or 'nfs' to create shared folders on DSM.                                                     | 'iscsi' | iSCSI, SMB, NFS     |
     | *formatOptions*                                  | string | Additional options/arguments passed to `mkfs.*` command. See a linux manual that corresponds with your FS of choice.                                               | -       | iSCSI               |
+    | *enableSpaceReclamation*                         | string | Enables space reclamation for Thin Provisioned Btrfs LUNs to improve storage efficiency. May impact performance and space display.                                 | 'false' | iSCSI               |
+    | *enableFuaSyncCache*                             | string | Enables FUA and Sync Cache SCSI commands for LUNs.                                                                                                                 | 'false' | iSCSI               |
     | *csi.storage.k8s.io/node-stage-secret-name*      | string | The name of node-stage-secret. Required if DSM shared folder is accessed via SMB.                                                                                  | -       | SMB                 |
     | *csi.storage.k8s.io/node-stage-secret-namespace* | string | The namespace of node-stage-secret. Required if DSM shared folder is accessed via SMB.                                                                             | -       | SMB                 |
     | *mountPermissions*                               | string | Mounted folder permissions. If set as non-zero, driver will perform `chmod` after mount                                                                            | '0750'  | NFS                 |

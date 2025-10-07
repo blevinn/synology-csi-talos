@@ -56,6 +56,6 @@ EOT
 ENV PATH="/csibin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 
 # Copy and run CSI driver
-COPY --from=builder /go/src/synok8scsiplugin/synology-csi-driver /synology-csi-driver
+COPY --from=builder /go/src/synok8scsiplugin/bin/synology-csi-driver synology-csi-driver
 
 ENTRYPOINT ["/synology-csi-driver"]
