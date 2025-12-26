@@ -16,7 +16,7 @@ ARG TARGETPLATFORM
 ENV CGO_ENABLED=0 GOOS=linux
 RUN GOARCH=$(echo "$TARGETPLATFORM" | cut -f2 -d/) \
     GOARM=$(echo "$TARGETPLATFORM" | cut -f3 -d/ | cut -c2-) \
-    go build -v -ldflags '-extldflags "-static"' -o ./synology-csi-driver .
+    go build -v -ldflags '-extldflags "-static"' -o ./bin/synology-csi-driver .
 
 ############## Final stage ##############
 FROM alpine:latest as driver
@@ -56,6 +56,6 @@ EOT
 ENV PATH="/csibin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 
 # Copy and run CSI driver
-COPY --from=builder /go/src/synok8scsiplugin/synology-csi-driver /synology-csi-driver
+COPY --from=builder /go/src/synok8scsiplugin/bin/synology-csi-driver synology-csi-driver
 
 ENTRYPOINT ["/synology-csi-driver"]

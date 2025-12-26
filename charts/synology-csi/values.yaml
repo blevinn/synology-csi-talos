@@ -39,6 +39,7 @@ images:
       repository: ghcr.io/blevinn/synology-csi
       # Defaults to {{ $.Chart.AppVersion }} if empty or not present:
       tag: ""
+    supportChrootDir: true
   provisioner:
     pullPolicy: IfNotPresent
     image:
